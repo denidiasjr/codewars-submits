@@ -1,2 +1,2 @@
-# codewars-submits
-My Kata submits on codewars.com
+# Codewars Submits
+My Kata submits on [Codewars](https://www.codewars.com).
