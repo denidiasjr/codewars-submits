@@ -1,8 +1,6 @@
 // My Solution
 var palindromeChainLength = function(n) {
-    
     let chain = 0;
-
     while (String(n).split('').reverse().join('') != n){
         chain++;
         n += Number(String(n).split('').reverse().join(''));
