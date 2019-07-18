@@ -1,8 +1,11 @@
 // https://www.codewars.com/kata/529a92d9aba78c356b000353
 
+/* 
+
+MY SOLUTION
+
+*/
 Cons.fromArray = function(array) {
-    //TODO provide a convenient method to convert a JavaScript array
-    //to an algebraic list.
 
     let consList = null;
 
@@ -25,14 +28,12 @@ Cons.fromArray = function(array) {
 };
 
 function filter(list, predicate) {
-    //TODO: return a new list containing only elements
-    //that satisfy the predicate function.
 
     let listCurrent = list;
     let newList = null;
     let newListCurrent = null;
 
-    while (listCurrent.tail !== null) {
+    while (listCurrent !== null) {
 
         if (predicate(listCurrent.head)) {
 
@@ -49,21 +50,18 @@ function filter(list, predicate) {
         } 
 
         listCurrent = listCurrent.tail;
-
     }
-    
+
     return newList;
 }
 
 function map(list, mapper) {
-    //TODO: return a new list containing all elements
-    //resulting from applying the mapper functiont to them
   
     let listCurrent = list;
     let newList = null;
     let newListCurrent = null;
 
-    while (listCurrent.tail !== null) {
+    while (listCurrent !== null) {
 
         if (newList === null) {
 
@@ -96,5 +94,28 @@ function Cons(head,tail){
     this.tail = tail;
 }
 
-Cons.fromArray([1, 2, 3, 4, 5, 6, 7, 8, 9]).filter((value) => { return value % 2 === 0 });
+/*
+
+BEST FUCKING SOLUTION
+
+*/
+
+Cons.fromArray = function(array) {
+    return array.reduceRight(function(list, e) { return new Cons(e, list); }, null);
+};
+Cons.prototype.filter = function(predicate) {
+  var tail = this.tail && this.tail.filter(predicate);
+  return predicate(this.head) ? new Cons(this.head, tail) : tail;
+};
+Cons.prototype.map = function(mapper)    {
+  return new Cons(mapper(this.head), this.tail && this.tail.map(mapper));
+};
+
+
+/*
+
+TESTS
+
+*/
+Cons.fromArray([1, 2, 3, 4, 5, 6, 7, 8, 9]).filter((value) => { return value % 2 !== 0 });
 Cons.fromArray([1, 2, 3, 4, 5, 6, 7, 8, 9]).map((value) => { return value * value });
