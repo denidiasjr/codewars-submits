@@ -1,13 +1,15 @@
 // https://www.codewars.com/kata/nim-the-game/
 
+/*
+
+MY SOLUTION
+
+*/
 function calculateNimSum(state) {
   return state.reduce((acum, value) => acum ^ value, 0);
 }
 
 function chooseMove(state) {
-  const nimSum = calculateNimSum(state);
-
-  // if nimSum !== 0
   const computerMove = state.reduce((acum, pile, index) => {
     if (acum) {
       return acum;
@@ -30,4 +32,18 @@ function chooseMove(state) {
   }, null);
 
   return computerMove;
+}
+
+/*
+
+BEST SOLUTION
+
+*/
+function chooseMove(state) {
+  let x = state.reduce((acc, s) => acc^s, 0);
+  for (let [i, e] of state.entries()) {
+    if ((e ^ x) < e) {
+     return [i, e - (e ^ x)];
+    }
+  }
 }
