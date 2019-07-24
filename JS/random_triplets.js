@@ -4,7 +4,12 @@ const recoverSecret = function(triplets) {
 
     // Tentativa 1: Percorrer cada vetor de trás pra frente
     let secret = triplets.reduce((acum, triplet) => {
-    
+      
+      triplet.slice().reverse().forEach((char, index) => {
+        
+        
+      });
+
     }, []);
 
     return secret.join('');
@@ -12,7 +17,7 @@ const recoverSecret = function(triplets) {
 
 
 const secret1 = "whatisup"
-const triplets1 = [
+const triplets = [
   ['t','u','p'],
   ['w','h','i'],
   ['t','s','u'],
@@ -21,3 +26,5 @@ const triplets1 = [
   ['t','i','s'],
   ['w','h','s']
 ]
+
+recoverSecret(triplets);
