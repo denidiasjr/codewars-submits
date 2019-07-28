@@ -3,12 +3,51 @@
 const recoverSecret = function(triplets) {
 
     // Tentativa 1: Percorrer cada vetor de trás pra frente
-    let secret = triplets.reduce((acum, triplet) => {
-      
-      triplet.slice().reverse().forEach((char, index) => {
-        
-        
-      });
+    let secret = triplets.reduce((acumTotal, triplet) => {
+
+      let largestIndexFromTriplet = -1;
+
+      let currentTriplet = triplet.reduce((acumTriplet, char) => {
+
+        const currentIndex = acumTriplet.indexOf(char);
+
+        if (largestIndexFromTriplet === -1 && currentIndex === -1) {
+          acumTriplet.push(char);
+          largestIndexFromTriplet = acumTriplet.length - 1;
+          return acumTriplet;
+        }
+
+        if (largestIndexFromTriplet === -1 && currentIndex >= 0) {
+          largestIndexFromTriplet = currentIndex;
+          return acumTriplet;
+        }
+
+        if (currentIndex === -1) {
+          acumTriplet.splice(largestIndexFromTriplet + 1, 0, char);
+          largestIndexFromTriplet = currentIndex;
+          return acumTriplet;
+        }
+
+        if (currentIndex > largestIndexFromTriplet) {
+          acumTriplet.splice(currentIndex, 1);
+          acumTriplet.splice(largestIndexFromTriplet + 1, 0, char);
+          largestIndexFromTriplet = currentIndex;
+          return acumTriplet;
+        }
+
+        if (currentIndex < largestIndexFromTriplet) {
+          const removedChar = acumTriplet.splice(largestIndexFromTriplet, 1)[0];
+          acumTriplet.splice(currentIndex, 0, removedChar);
+          largestIndexFromTriplet = currentIndex + 1;
+          return acumTriplet;
+        }
+
+        largestIndexFromTriplet = currentIndex;
+        return acumTriplet;
+
+      }, acumTotal);
+
+      return currentTriplet;
 
     }, []);
 
@@ -27,4 +66,4 @@ const triplets = [
   ['w','h','s']
 ]
 
-recoverSecret(triplets);
+console.log(recoverSecret(triplets));
