@@ -3,6 +3,7 @@
 // My Solution
 function getPINs(observed) {
   
+  const observedArray = observed.split('');
   const possibilitiesByNumber = [
     ['8', '0'],
     ['1', '2', '4'],
@@ -16,29 +17,18 @@ function getPINs(observed) {
     ['6', '8', '9']
   ];
 
-  let expectations = [];
-  const observedArray = observed.split('');
-
-  observedArray.forEach((enterNumber, index) => {
+  return observedArray.reduce((currentSequence, enterNumber, index) => {
     if (index === 0) {
-      return expectations.push(...possibilitiesByNumber[enterNumber]);
+      return possibilitiesByNumber[enterNumber];
     } 
 
-    let nextNumberSequence = [];
-
-    expectations.forEach(expectedNumber => {
-      nextNumberSequence = [
-        ...nextNumberSequence,
+   return currentSequence.reduce((nextSequence, expectedNumber) => [
+        ...nextSequence,
         ...possibilitiesByNumber[enterNumber].map(possibleNumber => 
           `${expectedNumber}${possibleNumber}`
         )
-      ];
-    });
-
-    expectations = nextNumberSequence;
-  });
-
-  return expectations;
+    ], []);
+  }, []);
 }
 
 console.log(getPINs("369"))
