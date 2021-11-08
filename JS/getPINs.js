@@ -2,8 +2,7 @@
 
 // My Solution
 function getPINs(observed) {
-  
-  const observedArray = observed.split('');
+
   const possibilitiesByNumber = [
     ['8', '0'],
     ['1', '2', '4'],
@@ -17,7 +16,7 @@ function getPINs(observed) {
     ['6', '8', '9']
   ];
 
-  return observedArray.reduce((currentSequence, enterNumber, index) => {
+  return observed.split('').reduce((currentSequence, enterNumber, index) => {
     if (index === 0) {
       return possibilitiesByNumber[enterNumber];
     } 
