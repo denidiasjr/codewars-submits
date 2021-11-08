@@ -16,7 +16,7 @@ function getPINs(observed) {
     ['6', '8', '9']
   ];
 
-  const expectations = [];
+  let expectations = [];
   const observedArray = observed.split('');
 
   observedArray.forEach((enterNumber, index) => {
@@ -24,10 +24,21 @@ function getPINs(observed) {
       return expectations.push(...possibilitiesByNumber[enterNumber]);
     } 
 
-    expectations.forEach((expectedNumber, expectedIndex) => {
+    let nextNumberSequence = [];
 
+    expectations.forEach(expectedNumber => {
+      nextNumberSequence = [
+        ...nextNumberSequence,
+        ...possibilitiesByNumber[enterNumber].map(possibleNumber => 
+          `${expectedNumber}${possibleNumber}`
+        )
+      ];
     });
+
+    expectations = nextNumberSequence;
   });
+
+  return expectations;
 }
 
-getPINs("11")
+console.log(getPINs("369"))
