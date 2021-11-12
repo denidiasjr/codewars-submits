@@ -1,3 +1,5 @@
+// https://www.codewars.com/kata/54d81488b981293527000c8f
+
 // First solution (didn't  worked by performance issues)
 const sumPairs = (listOfNumbers, sumValue) => {
   let indexToJump = 1;
