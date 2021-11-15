@@ -42,6 +42,17 @@ function minus(r) { return function(l) { return l - r; }; }
 function times(r) { return function(l) { return l * r; }; }
 function dividedBy(r) { return function(l) { return l / r; }; }
 
+// Clever Solution
+['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+.forEach(function (name, n) {
+  this[name] = function (f) { return f ? f(n) : n }
+});
+
+function plus(n)      { return function (a) { return a + n } }
+function minus(n)     { return function (a) { return a - n } }
+function times(n)     { return function (a) { return a * n } }
+function dividedBy(n) { return function (a) { return a / n } }
+
 console.log(seven(times(five())));
 console.log(four(plus(nine())));
 console.log(eight(minus(three())));
