@@ -1,52 +1,43 @@
 // https://leetcode.com/problems/longest-consecutive-sequence/description/
 
 function longestConsecutive(nums: number[]): number {
-    const valuesVisited = new Map<number, boolean>();
+    const values = new Set(nums);
     let longestSequence = 0;
 
     if (nums.length === 0) {
         return 0;
     }
 
-    for (let i = 0; i < nums.length; i++) {
-        valuesVisited.set(nums[i], false);
-    }
+    const getIncrementSequence = (currentValue: number, sum: number = 0): number => {
+        const hasValue = values.has(currentValue);
 
-    const getIncrementSequence = (value: number, sum: number = 0): number => {
-        const hasValueBeenVisited = valuesVisited.get(value);
-        const valueExists = hasValueBeenVisited !== undefined;
-
-        if (!valueExists || hasValueBeenVisited) {
+        if (!hasValue) {
             return sum;
         }
-        
-        valuesVisited.set(value, true);
-        return getIncrementSequence(value + 1, sum + 1);
+
+        values.delete(currentValue);
+        return getIncrementSequence(currentValue + 1, sum + 1);
     };
 
-    function getDecrementSequence(value: number, sum: number = 0): number {
-        const hasValueBeenVisited = valuesVisited.get(value);
-        const valueExists = hasValueBeenVisited !== undefined;
+    function getDecrementSequence(currentValue: number, sum: number = 0): number {
+        const hasValue = values.has(currentValue);
 
-
-        if (!valueExists || hasValueBeenVisited) {
+        if (!hasValue) {
             return sum;
         }
 
-        valuesVisited.set(value, true);
-        return getDecrementSequence(value - 1, sum + 1);
+        values.delete(currentValue);
+        return getDecrementSequence(currentValue - 1, sum + 1);
     }
 
-    for (const value of valuesVisited.keys()) {
-        const hasValueBeenVisited = valuesVisited.get(value);
-        if (!hasValueBeenVisited) {
-            const countDecrement = getDecrementSequence(value - 1);
-            const countIncrement = getIncrementSequence(value + 1);
-            const currentSequence = countDecrement + countIncrement + 1;
+    for (const value of values.keys()) {
+        const countDecrement = getDecrementSequence(value - 1);
+        const countIncrement = getIncrementSequence(value + 1);
+        const currentSequence = countDecrement + countIncrement + 1;
+        values.delete(value);
 
-            if (currentSequence > longestSequence) {
-                longestSequence = currentSequence;
-            }
+        if (currentSequence > longestSequence) {
+            longestSequence = currentSequence;
         }
     }
 
